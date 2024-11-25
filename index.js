@@ -1,10 +1,12 @@
 // index.js
 import express from 'express';
 import cors from 'cors';
-import router from './sangbog/router.js';
+import router from './routes.js';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
-const PORT = 2705;
+const PORT = 3524;
 
 app.use(cors());
 app.use(express.json());
