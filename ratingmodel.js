@@ -1,17 +1,16 @@
 import { supabase } from './config/supabaseConfig.js'
 
-export class Genremodel {
+export class ratingmodel {
   static async getAll() {
-    const { data, error } = await supabase.from('genres').select('*');
+    const { data, error } = await supabase.from('user_ratings').select('*');
     if (error) throw new Error(error.message);
     return data;
   }
 
   static async create(formdata) {
-    const { data, error } = await supabase.from('genres').insert([
+    const { data, error } = await supabase.from('user_ratings').insert([
         {
-            title: formdata.title,
-            slug: formdata.slug,
+           num_star: formdata.num_star,
         }
     ]);
     if (error) throw new Error(error.message);
@@ -21,14 +20,14 @@ export class Genremodel {
   static async update(id, updatedData) {
     
     const { data, error } = await supabase
-      .from('genres')
+      .from('user_ratings')
       .update(updatedData)
       .eq('id', id)
       .select()
       .single();
       
     if (error) {
-      console.error('Error updating genre:', error.message);
+      console.error('Error updating rating:', error.message);
       return null;
     }
 
@@ -39,11 +38,11 @@ export class Genremodel {
   static async delet(id) {
     try{
       const { data, error } = await supabase
-        .from('genres')
+        .from('user_ratings')
         .delete()
         .eq('id', id);
         if (error) {
-          throw new Error(`error deleting genre:${error}`);
+          throw new Error(`error deleting rating:${error}`);
         }
         return true
     }

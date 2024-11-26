@@ -19,4 +19,32 @@ export class genrescontroller {
       res.status(500).json({ error: error.message });
     }
   }
+
+  static update = async (req, res) => {
+    const { id } = req.body;
+    const updatedData = req.body;
+    
+    
+    try {
+      console.log(updatedData);
+      
+      const updatedgenre = await Genremodel.update(id, updatedData);
+            
+      if (!updatedgenre) {
+          return res.status(404).json({ error: 'genre not found' });
+        }
+        res.status(200).json({ id: updatedgenre.id, message: 'genre updated successfully',});
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update genre' });
+    }
+  };
+  
+  static delet = async (req, res) => {
+    console.log(req.body);
+    
+      const { id } = req.body;
+      const success = await Genremodel.delet(id);
+      console.log(success);
+      
+  };
 }

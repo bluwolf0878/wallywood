@@ -1,17 +1,16 @@
 import { supabase } from './config/supabaseConfig.js'
 
-export class Genremodel {
+export class cartlinesmodel {
   static async getAll() {
-    const { data, error } = await supabase.from('genres').select('*');
+    const { data, error } = await supabase.from('cartlines').select('*');
     if (error) throw new Error(error.message);
     return data;
   }
 
   static async create(formdata) {
-    const { data, error } = await supabase.from('genres').insert([
+    const { data, error } = await supabase.from('cartlines').insert([
         {
-            title: formdata.title,
-            slug: formdata.slug,
+           quantity: formdata.quantity,
         }
     ]);
     if (error) throw new Error(error.message);
@@ -21,14 +20,14 @@ export class Genremodel {
   static async update(id, updatedData) {
     
     const { data, error } = await supabase
-      .from('genres')
+      .from('cartlines')
       .update(updatedData)
       .eq('id', id)
       .select()
       .single();
       
     if (error) {
-      console.error('Error updating genre:', error.message);
+      console.error('Error updating cart:', error.message);
       return null;
     }
 
@@ -39,11 +38,11 @@ export class Genremodel {
   static async delet(id) {
     try{
       const { data, error } = await supabase
-        .from('genres')
+        .from('cartlines')
         .delete()
         .eq('id', id);
         if (error) {
-          throw new Error(`error deleting genre:${error}`);
+          throw new Error(`error deleting cartlines:${error}`);
         }
         return true
     }
