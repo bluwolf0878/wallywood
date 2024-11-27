@@ -1,14 +1,20 @@
 import {PosterModel} from "./Postermodel.js";
 
 export class PosterController {
-  static async getAll(req, res) {
-    try {
-      const posters = await PosterModel.getAll();
-      res.status(200).json(posters);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+
+    static async getAll(req, res) {
+      try {
+        // Få limit fra query-parametre, standard er null (alle plakater)
+        const limit = req.query.limit ? parseInt(req.query.limit) : null;
+        
+        const posters = await PosterModel.getAll(limit);
+  
+        res.status(200).json(posters);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
     }
-  }
+  
 
   static async create(req, res) {
     try {
@@ -28,7 +34,7 @@ export class PosterController {
     
     try {
       const updatedposter = await PosterModel.update(id, updatedData);
-            
+
       if (!updatedposter) {
           return res.status(404).json({ error: 'poster not found' });
         }

@@ -1,11 +1,19 @@
 import { supabase } from './config/supabaseConfig.js'
 
 export class PosterModel {
-  static async getAll() {
-    const { data, error } = await supabase.from('posters').select('*');
-    if (error) throw new Error(error.message);
-    return data;
-  }
+  
+    static async getAll(limit = null) {
+      const query = supabase.from('posters').select('*');
+      
+      if (limit) {
+        query.limit(limit); // Begræns antal plakater
+      }
+  
+      const { data, error } = await query;
+      if (error) throw new Error(error.message);
+      return data;
+    }
+  
 
   static async create(formdata) {
     const { data, error } = await supabase.from('posters').insert([
