@@ -1,4 +1,8 @@
 import { Home } from './homepage.js';
+import { Posters } from './posters.js';
+// import { About } from './About.js';
+// import { Contact } from './Contact.js';
+// import { Login } from './Login.js';
 
 const app = document.getElementById('app');
 
